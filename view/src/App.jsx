@@ -13,15 +13,12 @@ function App() {
     ));
   }, [routes]);
 
-
-
-
   return (
     <>
       <ToastContainer />
       <Routes>{generateRoutes()}</Routes>
     </>
   );
-}
+};
 
 export default App;

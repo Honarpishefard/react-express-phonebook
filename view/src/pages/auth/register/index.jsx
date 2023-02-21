@@ -7,7 +7,7 @@ export function Register() {
 
   return (
     <div className="max-w-lg mx-auto my-6">
-      <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
         Register
       </h1>
       <form onSubmit={handleSubmit(onRegister)}>
