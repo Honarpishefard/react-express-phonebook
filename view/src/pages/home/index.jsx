@@ -7,11 +7,12 @@ import { Button, TextField } from "components";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { saveContactService } from "api/services/saveContact";
 
 const contactSchema = yup
   .object({
     name: yup.string().required("please enter a name"),
-    number: yup.number().required("please enter a number"),
+    number: yup.number().transform((value) => (isNaN(value) || value === null || value === undefined) ? null : value).nullable().required("please enter a number"),
   })
   .required();
 
@@ -29,10 +30,9 @@ export function Home() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const res = await registerService(data);
+      const res = await saveContactService(data);
       toast.success(res?.data?.message);
       setLoading(false);
-      navigate("/login");
     } catch (ex) {
       toast.error(ex?.response?.data?.message);
       setLoading(false);

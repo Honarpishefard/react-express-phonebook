@@ -14,8 +14,8 @@ const handleRegister = async (req, res) => {
 
   const duplicateUser = await User.findOne({ email: req.body.email });
   if (duplicateUser) {
-    return res.status(400).json({ message: "This email already exists" });
-  }
+    return res.status(400).json({ message: "This email already exists, Login instead" });
+  };
 
   const hashedPassword = await bcrypt.hash(req.body.password, 8);
   const user = new User({ email: req.body.email, password: hashedPassword });
