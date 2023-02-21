@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { routes } from "./routes";
 import { Route, Routes } from "react-router";
-import useAuth from './hooks/useAuth';
+import useAuth from "./hooks/useAuth";
 
 function App() {
   useAuth();
@@ -12,6 +12,9 @@ function App() {
       <Route path={route.path} element={route.element} />
     ));
   }, [routes]);
+
+
+
 
   return (
     <>
