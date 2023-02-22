@@ -10,11 +10,15 @@ require("dotenv").config({
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
-mongoose.connect("mongodb://127.0.0.1:27017/phoneBook").then(console.log('DB connected'));
+var db = null;
+mongoose.connect("mongodb://127.0.0.1:27017/phoneBook", function (err, ldb) {
+  db = ldb;
+  console.log("DB connected");
+});
 
 server.use(cors());
 server.use(express.json({ extended: false }));
-server.use('/api', require('./routes').router);
+server.use("/api", require("./routes").router);
 
 const handleMainRoute = (req, res) => {
   res.json({ home: "home" });
@@ -22,3 +26,10 @@ const handleMainRoute = (req, res) => {
 
 server.get("/", handleMainRoute);
 
+server.get("/api/contacts", function (req, res) {
+  db.collection("contacts")
+    .find()
+    .toArray(function (err, result) {
+      res.send(result);
+    });
+});

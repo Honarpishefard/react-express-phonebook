@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Button, LinkComp, TextField } from "components";
+import { Button, Container, LinkComp, TextField } from "components";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -55,7 +55,7 @@ export function Home() {
   }, [Cookies]);
 
   return (
-    <div className="max-w-lg mx-auto my-6">
+    <Container>
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
         Save your contacts here
       </h1>
@@ -79,6 +79,6 @@ export function Home() {
         <Button loading={loading}>Save</Button>
         <LinkComp value="See your contacts" to="/contacts" />
       </form>
-    </div>
+    </Container>
   );
-};
+}

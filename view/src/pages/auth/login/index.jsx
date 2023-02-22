@@ -1,11 +1,11 @@
-import { Button, LinkComp, TextField } from "components";
+import { Button, Container, LinkComp, TextField } from "components";
 import useLogin from "./useLogin";
 
 export const Login = () => {
   const { onLogin, handleSubmit, register, errors, loading } = useLogin();
 
   return (
-    <div className="max-w-lg mx-auto my-6">
+    <Container>
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
         Login
       </h1>
@@ -45,7 +45,7 @@ export const Login = () => {
         </div>
         <Button loading={loading}>Submit</Button>
       </form>
-      <LinkComp value='Register Instead' to='/register'/>
-    </div>
+      <LinkComp value="Register Instead" to="/register" />
+    </Container>
   );
 };
