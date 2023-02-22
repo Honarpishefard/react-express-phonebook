@@ -22,7 +22,7 @@ export function Contacts() {
         </div>
         <div className="flex gap-12 py-4">
           <Button onClick={() => console.log("edite", i._id)}>Edit</Button>
-          <Button onClick={() => mainInstance.post("/contacts", i._id)}>
+          <Button onClick={() => mainInstance.post("/contacts", { id: i._id })}>
             Delete
           </Button>
         </div>
