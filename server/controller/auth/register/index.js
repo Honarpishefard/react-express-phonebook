@@ -19,7 +19,7 @@ const handleRegister = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(req.body.password, 8);
   const user = new User({ email: req.body.email, password: hashedPassword });
-  await user.save((err) => {
+  user.save((err) => {
     console.log(err);
   });
   res.status(201).json({

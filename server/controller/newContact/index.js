@@ -1,6 +1,8 @@
 const { Contact } = require("../../model/Contact");
 
 const handleNewContact = async (req, res) => {
+  console.log(req.body);
+
   if (!req?.body?.name)
     return res.status(400).json({
       message: "no name entered",
@@ -11,10 +13,14 @@ const handleNewContact = async (req, res) => {
   const duplicateContact = await Contact.findOne({ number: req.body.number });
   if (duplicateContact) {
     return res.status(400).json({ message: "This number already exists" });
-  };
+  }
+  console.log(req.body);
+  const contact = new Contact({
+    name: req.body.name,
+    number: req.body.number,
+  });
 
-  const contact = new Contact({ name: req.body.name, number: req.body.number });
-  await contact.save((err) => {
+  contact.save((err) => {
     console.log(err);
   });
   res.status(201).json({

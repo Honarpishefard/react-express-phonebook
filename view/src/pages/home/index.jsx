@@ -3,16 +3,22 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Button, TextField } from "components";
+import { Button, LinkComp, TextField } from "components";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { saveContactService } from "api/services/saveContact";
+import { saveContactService } from "api/services";
 
 const contactSchema = yup
   .object({
     name: yup.string().required("please enter a name"),
-    number: yup.number().transform((value) => (isNaN(value) || value === null || value === undefined) ? null : value).nullable().required("please enter a number"),
+    number: yup
+      .number()
+      .transform((value) =>
+        isNaN(value) || value === null || value === undefined ? null : value
+      )
+      .nullable()
+      .required("please enter a number"),
   })
   .required();
 
@@ -71,7 +77,8 @@ export function Home() {
           error={errors?.number?.message}
         />
         <Button loading={loading}>Save</Button>
+        <LinkComp value="See your contacts" to="/contacts" />
       </form>
     </div>
   );
-}
+};

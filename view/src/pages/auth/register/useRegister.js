@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { registerService } from "api";
-import { useNavigate } from 'react-router';
+import { useNavigate } from "react-router";
 
 const registerSchema = yup
   .object({
@@ -31,7 +31,7 @@ const useRegister = () => {
       const res = await registerService(data);
       toast.success(res?.data?.message);
       setLoading(false);
-      navigate('/login');
+      navigate("/login");
     } catch (ex) {
       toast.error(ex?.response?.data?.message);
       setLoading(false);
