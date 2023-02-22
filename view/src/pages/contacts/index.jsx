@@ -15,14 +15,16 @@ export function Contacts() {
 
   const cards = () => {
     return contacts.map((i) => (
-      <div className="py-2">
+      <div className="py-2" key={i._id}>
         <div className="flex items-center">
           <p className="font-bold text-xl grow">{i.name}</p>
           <p>{i.number}</p>
         </div>
         <div className="flex gap-12 py-4">
           <Button onClick={() => console.log("edite", i._id)}>Edit</Button>
-          <Button onClick={() => console.log("delete", i._id)}>Delete</Button>
+          <Button onClick={() => mainInstance.post("/contacts", i._id)}>
+            Delete
+          </Button>
         </div>
       </div>
     ));

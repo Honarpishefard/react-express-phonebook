@@ -45,6 +45,14 @@ export function Home() {
     }
   };
 
+  const handleLogOut = () => {
+    Cookies.remove("loginToken");
+    toast.success("loged out successfuly");
+    setToken(Cookies.get("loginToken"));
+  };
+
+  const [token, setToken] = useState("");
+
   useEffect(() => {
     if (!Cookies.get("loginToken")) {
       navigate("/login");
@@ -52,10 +60,16 @@ export function Home() {
         toastId: "info",
       });
     }
-  }, [Cookies]);
+  }, [token]);
 
   return (
-    <Container>
+    <Container classes="flex flex-col">
+      <button
+        className="bg-transparent text-sky-500 self-end"
+        onClick={() => handleLogOut()}
+      >
+        Log out
+      </button>
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
         Save your contacts here
       </h1>
