@@ -31,9 +31,11 @@ export function Home() {
   } = useForm({ resolver: yupResolver(contactSchema), mode: "onBlur" });
 
   const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setInputValue("");
     setLoading(true);
     try {
       const res = await saveContactService(data);
@@ -64,35 +66,39 @@ export function Home() {
 
   return (
     <Container classes="flex flex-col">
-      <button
-        className="bg-transparent text-sky-500 self-end"
-        onClick={() => handleLogOut()}
-      >
-        Log out
-      </button>
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
-        Save your contacts here
-      </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          label="Contact name"
-          htmlFor="name"
-          type="text"
-          id="name"
-          validation={{ ...register("name") }}
-          error={errors?.name?.message}
-        />
-        <TextField
-          label="Number"
-          htmlFor="number"
-          type="number"
-          id="number"
-          validation={{ ...register("number") }}
-          error={errors?.number?.message}
-        />
-        <Button loading={loading}>Save</Button>
-        <LinkComp value="See your contacts" to="/contacts" />
-      </form>
+        <button
+          className="bg-transparent text-sky-500 self-end"
+          onClick={() => handleLogOut()}
+        >
+          Log out
+        </button>
+        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-3 text-center">
+          Save your contacts here
+        </h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            onChange={(e) => setInputValue(e.target.value)}
+            label="Contact name"
+            htmlFor="name"
+            type="text"
+            id="name"
+            value={inputValue}
+            validation={{ ...register("name") }}
+            error={errors?.name?.message}
+          />
+          <TextField
+            onChange={(e) => setInputValue(e.target.value)}
+            label="Number"
+            htmlFor="number"
+            type="number"
+            id="number"
+            value={inputValue}
+            validation={{ ...register("number") }}
+            error={errors?.number?.message}
+          />
+          <Button loading={loading}>Save</Button>
+          <LinkComp value="See your contacts" to="/contacts" />
+        </form>
     </Container>
   );
 }

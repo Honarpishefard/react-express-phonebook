@@ -11,7 +11,7 @@ export function Contacts() {
       setContacts(info.data);
     };
     fetchContacts();
-  }, []);
+  }, [contacts]);
 
   const cards = () => {
     return contacts.map((i) => (
@@ -22,7 +22,7 @@ export function Contacts() {
         </div>
         <div className="flex gap-12 py-4">
           <Button onClick={() => console.log("edite", i._id)}>Edit</Button>
-          <Button onClick={() => mainInstance.post("/contacts", { id: i._id })}>
+          <Button onClick={() => mainInstance.post("/contacts", { id: i._id }).then(() => setContacts(contacts))}>
             Delete
           </Button>
         </div>

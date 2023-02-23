@@ -27,6 +27,7 @@ const handleMainRoute = (req, res) => {
 server.get("/", handleMainRoute);
 
 server.get("/api/contacts", function (req, res) {
+  if (!db.collection) return null;
   db.collection("contacts")
     .find()
     .toArray(function (err, result) {

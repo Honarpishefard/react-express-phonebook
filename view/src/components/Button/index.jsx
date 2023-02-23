@@ -1,4 +1,4 @@
-export const Button = ({ children, loading, ...props }) => {
+export const Button = ({ children, loading, classes, ...props }) => {
   return (
     <button
       {...props}
