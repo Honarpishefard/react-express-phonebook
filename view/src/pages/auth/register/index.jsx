@@ -1,4 +1,5 @@
-import { Button, Container, LinkComp, TextField } from "components";
+import { Button, LinkComp, TextField } from "components";
+import Container from "components/Container";
 import useRegister from "./useRegister";
 
 export function Register() {

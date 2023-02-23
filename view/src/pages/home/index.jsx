@@ -1,13 +1,14 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Button, Container, LinkComp, TextField } from "components";
+import { Button, LinkComp, TextField } from "components";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { saveContactService } from "api/services";
+import Container from "components/Container";
 
 const contactSchema = yup
   .object({
@@ -31,11 +32,13 @@ export function Home() {
   } = useForm({ resolver: yupResolver(contactSchema), mode: "onBlur" });
 
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState();
+  const [nameInputValue, setNameInputValue] = useState();
+  const [numberInputValue, setNumberInputValue] = useState();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    setInputValue("");
+    setNameInputValue('');
+    setNumberInputValue('');
     setLoading(true);
     try {
       const res = await saveContactService(data);
@@ -62,10 +65,11 @@ export function Home() {
         toastId: "info",
       });
     }
-  }, [token]);
+  }, [token, nameInputValue, numberInputValue]);
 
   return (
     <Container classes="flex flex-col">
+      <Suspense fallback={<div>Loading...</div>}>
         <button
           className="bg-transparent text-sky-500 self-end"
           onClick={() => handleLogOut()}
@@ -77,28 +81,29 @@ export function Home() {
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setNameInputValue(e.target.value)}
             label="Contact name"
             htmlFor="name"
             type="text"
             id="name"
-            value={inputValue}
+            value={nameInputValue}
             validation={{ ...register("name") }}
             error={errors?.name?.message}
           />
           <TextField
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(event) => setNumberInputValue(event.target.value)}
             label="Number"
             htmlFor="number"
             type="number"
             id="number"
-            value={inputValue}
+            value={numberInputValue}
             validation={{ ...register("number") }}
             error={errors?.number?.message}
           />
           <Button loading={loading}>Save</Button>
           <LinkComp value="See your contacts" to="/contacts" />
         </form>
+      </Suspense>
     </Container>
   );
 }
