@@ -52,7 +52,7 @@ export function Contacts() {
           ) : (
             cards()
           )}
-          <LinkComp value="Save more contacts" to="/" />
+          <LinkComp value="Save your contacts" to="/" />
         </Container>
       </Suspense>
     </div>

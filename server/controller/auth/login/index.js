@@ -22,7 +22,7 @@ const handleLogin = async (req, res) => {
         id: findUser._id,
         emial: findUser.email,
       };
-      const token = jwt.sign(tokenDetail, "secretKeyTest");
+      const token = jwt.sign(tokenDetail, "secretKey01");
       return res.status(200).json({
         message: "loged in",
         token,

@@ -32,8 +32,8 @@ export function Home() {
   } = useForm({ resolver: yupResolver(contactSchema), mode: "onBlur" });
 
   const [loading, setLoading] = useState(false);
-  const [nameInputValue, setNameInputValue] = useState();
-  const [numberInputValue, setNumberInputValue] = useState();
+  const [nameInputValue, setNameInputValue] = useState('');
+  const [numberInputValue, setNumberInputValue] = useState('');
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -106,4 +106,4 @@ export function Home() {
       </Suspense>
     </Container>
   );
-}
+};
