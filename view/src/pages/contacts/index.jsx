@@ -9,8 +9,11 @@ const Container = React.lazy(() =>
 export function Contacts() {
   const [contacts, setContacts] = useState([]);
   const [updateContacts, setUpdateContacts] = useState([]);
+  const [deleteItem, setDeleteItem] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [edit, setEdit] = useState("");
+
+  console.log(updateContacts);
 
   useEffect(() => {
     const fetchContacts = async (data) => {
@@ -18,7 +21,7 @@ export function Contacts() {
       setContacts(info.data);
     };
     fetchContacts();
-  }, [updateContacts]);
+  }, [deleteItem, editMode]);
 
   const cards = () => {
     return contacts.map((i) => (
@@ -32,12 +35,24 @@ export function Contacts() {
           <div className="flex justify-between">
             <TextField
               type="text"
+              onChange={(e) =>
+                setUpdateContacts({
+                  name: e.target.value,
+                  number: updateContacts.number,
+                })
+              }
               defaultValue={contacts.filter((i) => i._id === edit)[0].name}
               label="Contact name"
               classes="w-2/5"
             />
             <TextField
               type="number"
+              onChange={(event) =>
+                setUpdateContacts({
+                  name: updateContacts.name,
+                  number: event.target.value,
+                })
+              }
               defaultValue={contacts.filter((i) => i._id === edit)[0].number}
               label="contact number"
               classes="w-2/5"
@@ -55,17 +70,30 @@ export function Contacts() {
               onClick={() => {
                 setEditMode(!editMode);
                 setEdit(i._id);
+                setUpdateContacts({ name: i.name, number: i.number });
               }}
             >
               Edit
             </Button>
           ) : edit === i._id ? (
-            <Button onClick={() => setEditMode(!editMode)}>save</Button>
+            <Button
+              onClick={() => {
+                console.log({ updateContacts });
+                setEditMode(!editMode);
+                mainInstance.post("/contacts/edit", {
+                  updateContacts,
+                  id: edit,
+                });
+              }}
+            >
+              save
+            </Button>
           ) : (
             <Button
               onClick={() => {
                 setEditMode(!editMode);
                 setEdit(i._id);
+                setUpdateContacts({ name: i.name, number: i.number });
               }}
             >
               Edit
@@ -75,8 +103,8 @@ export function Contacts() {
           <Button
             onClick={() =>
               mainInstance
-                .post("/contacts", { id: i._id })
-                .then(() => setUpdateContacts(contacts))
+                .post("/contacts/delete", { id: i._id })
+                .then(() => setDeleteItem(contacts))
             }
           >
             Delete
