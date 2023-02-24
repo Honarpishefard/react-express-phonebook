@@ -29,7 +29,6 @@ const handleNewContact = async (req, res) => {
       });
     });
   };
-
 };
 
 module.exports = { handleNewContact };

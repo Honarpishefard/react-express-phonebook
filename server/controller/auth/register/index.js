@@ -6,7 +6,8 @@ const handleRegister = async (req, res) => {
     return res.status(400).json({
       message: "no email entered",
     });
-  if (!req.body.password) return res.status(400).json({message: 'password is empty'});
+  if (!req.body.password)
+    return res.status(400).json({ message: "password is empty" });
   if (req?.body?.password !== req?.body?.repeatPassword)
     return res.status(400).json({
       message: "passwords don't match",
@@ -14,8 +15,10 @@ const handleRegister = async (req, res) => {
 
   const duplicateUser = await User.findOne({ email: req.body.email });
   if (duplicateUser) {
-    return res.status(400).json({ message: "This email already exists, Login instead" });
-  };
+    return res
+      .status(400)
+      .json({ message: "This email already exists, Login instead" });
+  }
 
   const hashedPassword = await bcrypt.hash(req.body.password, 8);
   const user = new User({ email: req.body.email, password: hashedPassword });

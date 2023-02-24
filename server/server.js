@@ -20,12 +20,6 @@ server.use(cors());
 server.use(express.json({ extended: false }));
 server.use("/api", require("./routes").router);
 
-const handleMainRoute = (req, res) => {
-  res.json({ home: "home" });
-};
-
-server.get("/", handleMainRoute);
-
 server.get("/api/contacts", function (req, res) {
   if (!db.collection) return null;
   db.collection("contacts")
