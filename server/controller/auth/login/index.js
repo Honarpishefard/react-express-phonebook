@@ -14,7 +14,7 @@ const handleLogin = async (req, res) => {
 
   const findUser = await User.findOne({ email: req.body.email });
 
-  if (!findUser) res.status(404).json({ message: "user dosn't exist" });
+  if (!findUser) return res.status(404).json({ message: "user dosn't exist" });
 
   bcrypt.compare(req.body.password, findUser.password, function (err, result) {
     if (result) {
