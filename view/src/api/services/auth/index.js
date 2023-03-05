@@ -1,4 +1,4 @@
-import { mainInstance } from "./../../constants";
+import { mainInstance } from "api";
 
 export const registerService = (data) => {
   return mainInstance.post("/register", data);

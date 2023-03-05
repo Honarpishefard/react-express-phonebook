@@ -1,8 +1,5 @@
-import { mainInstance } from "./../../constants";
-import Cookies from "js-cookie";
+import { mainInstance } from "api";
 
 export const saveContactService = (data) => {
-  return mainInstance.post("/newContact", data, {
-    headers: { authorization: Cookies.get("loginToken") },
-  });
+  return mainInstance.post("/newContact", data);
 };

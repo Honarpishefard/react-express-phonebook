@@ -1,4 +1,4 @@
-import { mainInstance } from "api/constants";
+import { mainInstance } from "api";
 import { Button, LinkComp, Spinner, TextField } from "components";
 import React, { useState, useEffect, Suspense } from "react";
 
@@ -12,8 +12,6 @@ export function Contacts() {
   const [deleteItem, setDeleteItem] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [edit, setEdit] = useState("");
-
-  console.log(updateContacts);
 
   useEffect(() => {
     const fetchContacts = async (data) => {
@@ -78,7 +76,6 @@ export function Contacts() {
           ) : edit === i._id ? (
             <Button
               onClick={() => {
-                console.log({ updateContacts });
                 setEditMode(!editMode);
                 mainInstance.post("/contacts/edit", {
                   updateContacts,

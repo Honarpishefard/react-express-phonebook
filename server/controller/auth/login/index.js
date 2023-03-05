@@ -3,20 +3,21 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../../model/User");
 
 const handleLogin = async (req, res) => {
-  if (!req?.body?.email)
+  const { email, password } = req.body;
+
+  if (!email)
     return res.status(400).json({
       message: "no email entered",
     });
-  if (!req?.body?.password)
+  if (!password)
     return res.status(400).json({
       message: "no password",
     });
 
-  const findUser = await User.findOne({ email: req.body.email });
-
+  const findUser = await User.findOne({ email });
   if (!findUser) return res.status(404).json({ message: "user dosn't exist" });
 
-  bcrypt.compare(req.body.password, findUser.password, function (err, result) {
+  bcrypt.compare(password, findUser.password, function (err, result) {
     if (result) {
       const tokenDetail = {
         id: findUser._id,
